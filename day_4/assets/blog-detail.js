@@ -1,5 +1,5 @@
-let first =JSON.parse(localStorage.getItem("alpha"))
-console.log(first)
+//let first =JSON.parse(localStorage.getItem("alpha"))
+//console.log(first)
 
 /*
 document.getElementById("detail-content").innerHTML += `
