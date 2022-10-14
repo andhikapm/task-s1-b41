@@ -1,0 +1,209 @@
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="assets/blog.css">
+        <link rel="stylesheet" href="assets/index.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    </head>
+    <body>
+        <nav>
+            <div class="nav-left">
+                <ul>
+                    <li><a href="index.html"><img src="./assets/img/gam_nav.jpg" ></a></li>
+                    <li><a style="font-weight: lighter;" href="index.html">Home</a></li>
+                    <li><a href="blog.html">My Project</a></li>
+                </ul>
+            </div>
+            <div class="nav-right">
+                <a href="contact.html">Contact Me</a>
+            </div>
+        </nav>
+        <div>
+            <div class="blog">
+                <div class="blog-form">
+                    <div class="form-container">
+                        <form onsubmit="addBlog(event); this.reset(); return false">
+                            <h1>Add My Project</h1>
+                            <div>
+                                <label for="input-title">Project Name</label>
+                                <input id="input-title" class="custom-input-title">
+                            </div>
+                            <div style="display: flex;">
+                                <div id="showStartDate" style="margin-right: 1%; width: 49%;">
+                                    <!--
+                                    <label for="input-start-date">Start Date</label>
+                                    <input type="date" id="input-start-date" class="custom-input-start-date" min="${minTime}">
+                                    -->
+                                </div>
+                                <div id="showEndDate" style="margin-left: 1%; width: 49%;">
+                                    <!--
+                                    <label for="input-end-date">End Date</label>
+                                    <input type="date" id="input-end-date" class="custom-input-end-date" value="2022-07-22" min="2022-07-22" >
+                                    -->
+                                </div>
+                            </div>
+                            <div>
+                                <label for="input-content">Description</label>
+                                <textarea style="resize: none;" id="input-content" class="custom-input-content"></textarea>
+                            </div>
+                            <div>
+                                <label>Technologies</label>
+                            </div>
+                            <div style="display: flex; margin: 10px 0;">
+                                <div style="width: 50%;">
+                                    <input type="checkbox" id="data-Node-JS" value="Node JS ">
+                                    <label for="data-Node-JS">Node JS</label>
+                                </div>
+                                <div style="width: 50%;">
+                                    <input type="checkbox" id="data-Next-JS" value="Next JS">
+                                    <label for="data-Next-JS">Next JS</label>
+                                </div>
+                            </div>
+                            <div style="display: flex; margin: 10px 0;">
+                                <div style="width: 50%;">
+                                    <input type="checkbox" id="data-React-JS" value="React JS">
+                                    <label for="data-React-JS">React JS</label>
+                                </div>
+                                <div style="width: 50%;">
+                                    <input type="checkbox" id="data-TypeScript" value="TypeScript">
+                                    <label for="data-TypeScript">TypeScript</label>
+                                </div>
+                            </div>
+                            <div>
+                                <label>Upload Image</label>
+                                <div class="input-image-content">
+                                    <input type="file" id="input-blog-image" hidden="hidden" />
+                                    <button type="button" id="button-image" class="custom-button-image">choose</button>
+                                    <span id="text-image"></span>
+                                </div>
+                            </div>
+                            <div>
+                                <button>Post Blog</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <hr style="border: 0px; "/>
+                <div style="display: flex; justify-content: center;"><h1 >My Project</h1></div>
+                <div id="contents" class="blog-list">
+                    <div class="blog-list-item">
+                        <div class="blog-image">
+                            <img src="assets/img/indprof.jpg">
+                        </div>
+                        <div class="blog-content">
+                            <h1>
+                                <a href="blog-detail.html" target="_blank">
+                                    Pasar Coding di Indonesia Dinilai Masih Menjanjikan
+                                </a>
+                            </h1>
+                            <div class="detail-blog-content">
+                                12 Jul 2021 22:30 WIB | Ichsan Emrald Alamsyah
+                            </div>
+                            <p>
+                                Ketimpangan sumber daya manusia (SDM) di sektor digital masih
+                                menjadi isu yang belum terpecahkan. Berdasarkan penelitian
+                                ManpowerGroup, ketimpangan SDM global, termasuk Indonesia,
+                                meningkat dua kali lipat dalam satu dekade terakhir. Lorem ipsum,
+                                dolor sit amet consectetur adipisicing elit. Quam, molestiae
+                                numquam! Deleniti maiores expedita eaque deserunt quaerat! Dicta,
+                                eligendi debitis?
+                            </p>
+                            <div class="btn-group">
+                                <button class="btn-edit">Edit Post</button>
+                                <button class="btn-post">Post Blog</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="blog-list-item">
+                        <div class="blog-image">
+                            <img src="assets/img/indprof.jpg">
+                        </div>
+                        <div class="blog-content">
+                            
+                            <h1>
+                                <a href="blog-detail.html" target="_blank">
+                                    Pasar Coding di Indonesia Dinilai Masih Menjanjikan
+                                </a>
+                            </h1>
+                            <div class="detail-blog-content">
+                                12 Jul 2021 22:30 WIB | Ichsan Emrald Alamsyah
+                            </div>
+                            <p>
+                                Ketimpangan sumber daya manusia (SDM) di sektor digital masih
+                                menjadi isu yang belum terpecahkan. Berdasarkan penelitian
+                                ManpowerGroup, ketimpangan SDM global, termasuk Indonesia,
+                                meningkat dua kali lipat dalam satu dekade terakhir. Lorem ipsum,
+                                dolor sit amet consectetur adipisicing elit. Quam, molestiae
+                                numquam! Deleniti maiores expedita eaque deserunt quaerat! Dicta,
+                                eligendi debitis?
+                            </p>
+                            <div class="btn-group">
+                                <button class="btn-edit">Edit Post</button>
+                                <button class="btn-post">Post Blog</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="blog-list-item">
+                        <div class="blog-image">
+                            <img src="assets/img/indprof.jpg">
+                        </div>
+                        <div class="blog-content">
+                            
+                            <h1>
+                                <a href="blog-detail.html" target="_blank">
+                                    Pasar Coding di Indonesia Dinilai Masih Menjanjikan
+                                </a>
+                            </h1>
+                            <div class="detail-blog-content">
+                                12 Jul 2021 22:30 WIB | Ichsan Emrald Alamsyah
+                            </div>
+                            <p>
+                                Ketimpangan sumber daya manusia (SDM) di sektor digital masih
+                                menjadi isu yang belum terpecahkan. Berdasarkan penelitian
+                                ManpowerGroup, ketimpangan SDM global, termasuk Indonesia,
+                                meningkat dua kali lipat dalam satu dekade terakhir. Lorem ipsum,
+                                dolor sit amet consectetur adipisicing elit. Quam, molestiae
+                                numquam! Deleniti maiores expedita eaque deserunt quaerat! Dicta,
+                                eligendi debitis?
+                            </p>
+                            <div class="btn-group">
+                                <button class="btn-edit">Edit Post</button>
+                                <button class="btn-post">Post Blog</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="blog-list-item">
+                        <div class="blog-image">
+                            <img src="assets/img/indprof.jpg">
+                        </div>
+                        <div class="blog-content">
+                            
+                            <h1>
+                                <a href="blog-detail.html" target="_blank">
+                                    Pasar Coding di Indonesia Dinilai Masih Menjanjikan
+                                </a>
+                            </h1>
+                            <div class="detail-blog-content">
+                                12 Jul 2021 22:30 WIB | Ichsan Emrald Alamsyah
+                            </div>
+                            <p>
+                                Ketimpangan sumber daya manusia (SDM) di sektor digital masih
+                                menjadi isu yang belum terpecahkan. Berdasarkan penelitian
+                                ManpowerGroup, ketimpangan SDM global, termasuk Indonesia,
+                                meningkat dua kali lipat dalam satu dekade terakhir. Lorem ipsum,
+                                dolor sit amet consectetur adipisicing elit. Quam, molestiae
+                                numquam! Deleniti maiores expedita eaque deserunt quaerat! Dicta,
+                                eligendi debitis?
+                            </p>
+                            <div class="btn-group">
+                                <button class="btn-edit">Edit Post</button>
+                                <button class="btn-post">Post Blog</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script src="assets/blog.js"></script>
+</html>
