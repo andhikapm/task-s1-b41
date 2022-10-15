@@ -76,16 +76,16 @@ body {
 .blog-list {
     display: grid;
     grid-template-columns: auto auto auto;
-    padding: 50px;
+    padding: 50px 100px 0px 250px;
 }
 
 .blog-list-item {
-    width: 500px;
+    width: 350px;
     padding: 15px;
-    margin-bottom: 45px;
+    margin-bottom: 75px;
     border: 2px solid #dbdbdb;
     border-radius: 8px;
-    background-color: #ec4d37;
+    background-color: #ffffff;
 }
 
 .blog-image {
@@ -95,49 +95,62 @@ body {
 .blog-image img {
     width: 100%;
     height: 300px;
+    border-radius: 8px;
     object-fit: cover;
-    }
+}
 
 .blog .blog-list .blog-list-item .blog-content {
     padding-left: 20px;
     flex: 2;
 }
 
-.blog .blog-list .btn-group {
+.blog .blog-list h1{
+    margin-bottom: 5px
+}
+
+.blog .blog-list h1 a {
+    font-size: medium;
+    text-decoration: none;
+    color: #000000;
+}
+
+.blog .blog-list .detail-blog-content {
+    margin-top: 0;
+    color: #777777;
+    font-weight: 300;
+    font-size: 12px;
+}
+
+.parg-content{
+    overflow: hidden;
+    height: 150px;
+    margin-bottom: 45px;
+    background-color: white;
+}
+
+.blog .blog-list .blog-list-item p {
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 20px;
+    text-align: justify;
+}
+ 
+.btn-group {
     text-align: right;
     margin-bottom: 20px;
 }
 
-.blog .blog-list .btn-group .btn-edit {
+.btn-edit {
     padding: 5px 10px;
     border: 0;
     border-radius: 4px;
     background: #dbdbdb;
     }
 
-.blog .blog-list .btn-group .btn-post {
+.btn-post {
     padding: 5px 10px;
     border: 0;
     border-radius: 4px;
     background: #ec4d37;
     color: #fff;
-}
-
-.blog .blog-list h1 a {
-    text-decoration: none;
-    color: #000000;
-}
-
-.blog .blog-list .detail-blog-content {
-    font-weight: 300;
-    font-size: 12px;
-    line-height: 20px;
-}
-
-.blog .blog-list .blog-list-item p {
-    margin-top: 20px;
-    font-weight: normal;
-    font-size: 14px;
-    line-height: 20px;
-    text-align: justify;
 }

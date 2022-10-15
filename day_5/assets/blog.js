@@ -105,11 +105,13 @@ function renderBlog() {
                     </a>
                 </h1>
                 <div class="detail-blog-content">
-                    ${calDuration(dataBlog[index].startDate , dataBlog[index].EndDate)} | ${dataBlog[index].author}
+                    ${calDuration(dataBlog[index].startDate , dataBlog[index].EndDate)}
                 </div>
-                <p>
-                    ${dataBlog[index].content}
-                </p>
+                <div class="parg-content">
+                    <p>
+                        ${dataBlog[index].content}
+                    </p>
+                </div>
                 <div class="btn-group">
                     <button class="btn-edit">Edit Post</button>
                     <button class="btn-post">Post Blog</button>
