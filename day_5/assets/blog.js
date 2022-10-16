@@ -43,16 +43,16 @@ function addBlog(event) {
     let image = document.getElementById("input-blog-image").files[0]
     let startDate = document.getElementById("input-start-date").value
     let EndDate = document.getElementById("input-end-date").value
-    /*
-    let alpha = startDate.split("-")
-    console.log(alpha)
-    let beta = parseInt(alpha[0])
-    console.log(beta)
-    */
+    let datNodeJS = document.getElementById("data-Node-JS").checked
+    let datNextJS = document.getElementById("data-Next-JS").checked
+    let datReactJS = document.getElementById("data-React-JS").checked
+    let datTypeScript = document.getElementById("data-TypeScript").checked
+
     image = URL.createObjectURL(image)
-    console.log(image)
+    console.log(datNodeJS.checked, datNextJS.checked, datReactJS.checked, datTypeScript.checked)
 
     //calDuration(startDate , EndDate)
+    //techList(datNodeJS, datNextJS, datReactJS, datTypeScript)
 
     let blog = {
         title,
@@ -60,6 +60,10 @@ function addBlog(event) {
         image,
         startDate ,
         EndDate,
+        datNodeJS,
+        datNextJS,
+        datReactJS,
+        datTypeScript,
         author: "rangga alfa"
     }
     
@@ -95,10 +99,7 @@ function renderBlog() {
                     </p>
                 </div>
                 <div class="tech-list-group">
-                    <i class="fa-brands fa-google"></i>
-                    <i class="fa-brands fa-github"></i>
-                    <i class="fa-brands fa-windows"></i>
-                    <i class="fa-brands fa-android"></i>
+                    ${techList(dataBlog[index].datNodeJS, dataBlog[index].datNextJS, dataBlog[index].datReactJS, dataBlog[index].datTypeScript)}
                 </div>
                 <div class="btn-group">
                     <button class="btn-edit">edit</button>
@@ -109,8 +110,6 @@ function renderBlog() {
         `
     }
 
-// ${calDuration(dataBlog[index].startDate , dataBlog[index].EndDate)} | ${dataBlog[index].author}
-//${dataBlog[index].startDate} | ${dataBlog[index].author}
 }
 
 
@@ -195,4 +194,32 @@ function calDuration(startTime , endTime){
 
     return `Duration : ${texDuration}`
     
+}
+
+function techList(dataNode, dataNext, dataReact, dataTypeS){
+    let texTechlist = ''
+    if(dataNode == true){
+        texTechlist = texTechlist + '<i class="fa-brands fa-google"></i>' 
+        
+    }
+
+    if(dataNext == true){
+        texTechlist = texTechlist + '<i class="fa-brands fa-github"></i>' 
+        
+    }
+
+    if(dataReact == true){
+        texTechlist = texTechlist + '<i class="fa-brands fa-windows"></i>' 
+        
+    }
+
+    if(dataTypeS == true){
+        texTechlist = texTechlist + '<i class="fa-brands fa-android"></i>' 
+        
+    }
+
+    //console.log(texTechlist)
+
+    return texTechlist
+
 }
