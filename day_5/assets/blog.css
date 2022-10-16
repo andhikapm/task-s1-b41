@@ -81,6 +81,7 @@ body {
 
 .blog-list-item {
     width: 350px;
+    height: 500px;
     padding: 15px;
     margin-bottom: 75px;
     border: 2px solid #dbdbdb;
@@ -94,7 +95,7 @@ body {
 
 .blog-image img {
     width: 100%;
-    height: 300px;
+    height: 250px;
     border-radius: 8px;
     object-fit: cover;
 }
@@ -123,9 +124,8 @@ body {
 
 .parg-content{
     overflow: hidden;
-    height: 150px;
-    margin-bottom: 45px;
-    background-color: white;
+    height: 70px;
+    margin-bottom: 20px;
 }
 
 .blog .blog-list .blog-list-item p {
@@ -134,23 +134,39 @@ body {
     line-height: 20px;
     text-align: justify;
 }
+
+.tech-list-group{
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+.tech-list-group i{
+    margin-right: 15px;
+}
  
 .btn-group {
-    text-align: right;
+    display: grid;
+    grid-template-columns: auto auto;
     margin-bottom: 20px;
 }
 
 .btn-edit {
     padding: 5px 10px;
+    margin-right: 5px;
+    font-size: 13px;
+    font-weight: bold;
     border: 0;
-    border-radius: 4px;
-    background: #dbdbdb;
-    }
+    border-radius: 7px;
+    background:#000000;
+    color: #ffffff;
+}
 
 .btn-post {
     padding: 5px 10px;
+    font-size: 13px;
+    font-weight: bold;
     border: 0;
-    border-radius: 4px;
-    background: #ec4d37;
-    color: #fff;
+    border-radius: 7px;
+    background:#000000;
+    color: #ffffff;
 }

@@ -112,9 +112,15 @@ function renderBlog() {
                         ${dataBlog[index].content}
                     </p>
                 </div>
+                <div class="tech-list-group">
+                    <i class="fa-brands fa-google"></i>
+                    <i class="fa-brands fa-github"></i>
+                    <i class="fa-brands fa-windows"></i>
+                    <i class="fa-brands fa-android"></i>
+                </div>
                 <div class="btn-group">
-                    <button class="btn-edit">Edit Post</button>
-                    <button class="btn-post">Post Blog</button>
+                    <button class="btn-edit">edit</button>
+                    <button class="btn-post">delete</button>
                 </div>
             </div>
         </div>
