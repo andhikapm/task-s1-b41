@@ -1,59 +1,22 @@
 *{
     text-decoration: none;
-    font-family: Verdana, Geneva, Tahoma, sans-serif
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 body{
     margin: 0;
     background-color:#e9e9e9 ;
 }
-
-nav{
+.index-card{
+    background-color: white;
     display: flex;
-    align-items: center;
-    height: 10vh;
-    background-color: #bee2ff;
-    box-shadow: 0px 5px 5px #dddddd;
-}
-
-nav ul{
-    display: flex;
-    list-style: none;
-    align-items: center;
-}
-
-nav ul li{
-    margin-right: 70px;
-    font-weight: bold;
-    font-size: 20px;
-}
-
-nav ul li img{
-    width: 50px;
-    border-radius: 75px;
-}
-
-nav ul li a{
-    color: black;
-}
-
-.nav-left{
-    flex: 70%;
-}
-
-.nav-right{
-    flex: 30%;
-    text-align: end;
-    margin-right: 30px;
-}
-
-.nav-right a{
-    background-color: black;
-    padding: 10px 25px;
-    color: white;
+    width: 90vh;
+    height: auto;
+    padding: 50px 100px;
+    margin: 50px auto;
+    box-shadow: 0 0 10px gray;
     border-radius: 10px;
 }
-
 .card-left{
     flex: 60%;
 }
@@ -61,6 +24,23 @@ nav ul li a{
 .card-right{
     padding-left: 50px ;
     flex: 40%;
+}
+
+.index-contact{
+    font-size: 20px; 
+    color: white;
+    padding: 7px 30px;
+    margin-top: 15px;
+    margin-right: 15px; 
+    background-color: black; 
+    border-radius: 20px;
+}
+
+.index-download{
+    font-size: 20px;
+    background-color: white;
+    border: none; 
+    margin-top: 15px;
 }
 
 .list_sosmed{
@@ -78,4 +58,18 @@ nav ul li a{
     border-radius: 100%; 
     background-color: black;
     margin-right: 15px;
+}
+
+.card-right div{
+    width: 350px;
+    height: 550px;
+    box-shadow: 0 0 10px gray;
+    border-radius: 10px
+}
+
+.card-right img{
+    object-fit: cover; 
+    width:inherit; 
+    height: 435px; 
+    border-radius: 10px 10px 0 0;
 }

@@ -1,21 +1,3 @@
-const realFileBtn = document.getElementById("input-blog-image");
-const customBtn = document.getElementById("button-image");
-const customTxt = document.getElementById("text-image");
-
-customBtn.addEventListener("click", function() {
-  realFileBtn.click();
-});
-
-realFileBtn.addEventListener("change", function() {
-  if (realFileBtn.value) {
-    customTxt.innerHTML = realFileBtn.value.match(
-      /[\/\\]([\w\d\s\.\-\(\)]+)$/
-    )[1];
-  } else {
-    customTxt.innerHTML = "";
-  }
-});
-
 let minTime = new Date()
 
 let minDate = minTime.getDate()
@@ -70,7 +52,7 @@ function addBlog(event) {
     image = URL.createObjectURL(image)
     console.log(image)
 
-    calDuration(startDate , EndDate)
+    //calDuration(startDate , EndDate)
 
     let blog = {
         title,
@@ -132,7 +114,6 @@ function renderBlog() {
 }
 
 
-
 function calDuration(startTime , endTime){
     let stringStart = startTime.split("-")
     let stringEnd = endTime.split("-")
@@ -153,22 +134,62 @@ function calDuration(startTime , endTime){
     let calDay = intEnd[2] - intStart[2] // -10
     let texDuration = ""
 
-    if(calYear > 0){
-        texDuration = calYear + " Years"
-    }else if(calMonth >0){
-        texDuration = calMonth + " Months"
-    }else{
-        texDuration = calDay + " Days"
-    }
-
+    let checkFeb = intStart[0] % 4
+    let mon30 = [4, 6, 9, 11]
+/*
     console.log(intStart)
     console.log(intEnd)
-    console.log(texDuration)
+    console.log(texDuration)*/
 
-    if(calYear > 0 && calMonth< 0){
+    if(1 >= calYear > 0 && calMonth< 0){
+
         calMonth = calMonth + 12
-        console.log(calMonth)
-    } else if(calMonth > 0 && calDay <0){
+        texDuration = calMonth + " Months"
+        //console.log(`${calMonth} bulan`)
+
+    } else if(1 >= calMonth > 0 && calDay <0){
+        if(checkFeb == 0 && intStart[1] == 2){
+
+            calDay = calDay + 29
+
+        } else if(intStart[1] == 2){
+
+            calDay = calDay + 28
+
+        } else {
+
+            let tanda31 = true
+
+            for(let index = 0; index < 4; index++){
+
+                if(mon30[index] == intStart[1]){
+                    calDay = calDay + 30
+                    tanda31 = false
+                    break 
+
+                }
+            }
+            if(tanda31 == true){
+
+                calDay = calDay + 31
+
+            }
+
+        }
+        texDuration = calDay + " Days"
+        //console.log(`${calDay} hari`)
+
+    }else if(calYear > 0){
+
+        texDuration = calYear + " Years"
+
+    }else if(calMonth >0){
+
+        texDuration = calMonth + " Months"
+
+    }else{
+
+        texDuration = calDay + " Days"
 
     }
 

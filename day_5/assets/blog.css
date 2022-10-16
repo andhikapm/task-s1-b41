@@ -1,3 +1,8 @@
+*{
+    text-decoration: none;
+    font-family: Verdana, Geneva, Tahoma, sans-serif
+}
+
 body {
     margin: 0;
 }
@@ -52,9 +57,8 @@ body {
 }
 
 .input-image-content{
+    padding: 8px;
     width: 100%;
-    font-size: 20px;
-    font-weight: 500;
     margin-top: 7px;
     margin-bottom: 20px;
     background-color: rgb(247, 247, 247);
@@ -63,14 +67,19 @@ body {
     
 }
 
+.btn-submit{
+    display: flex;
+    justify-content: end;
+}
 
-.custom-button-image {
-    padding: 10px;
-    color: rgb(255, 255, 255);
-    background-color: rgb(158, 158, 158);
-    border: 1px solid rgb(100, 100, 100);
-    border-radius: 10px;
-    cursor: pointer;
+.btn-submit button{
+    padding: 8px 25px;
+    font-size: 15px;
+    font-weight: bold;
+    border: 0;
+    border-radius: 17px;
+    background:#000000;
+    color: #ffffff;
 }
 
 .blog-list {

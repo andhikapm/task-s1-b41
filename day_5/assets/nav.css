@@ -1,0 +1,44 @@
+nav{
+    display: flex;
+    align-items: center;
+    height: 10vh;
+    background-color: #bee2ff;
+    box-shadow: 0px 5px 5px #dddddd;
+}
+
+nav ul{
+    display: flex;
+    list-style: none;
+    align-items: center;
+}
+
+nav ul li{
+    margin-right: 70px;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+nav ul li img{
+    width: 50px;
+}
+
+nav ul li a{
+    color: black;
+}
+
+.nav-left{
+    flex: 70%;
+}
+
+.nav-right{
+    flex: 30%;
+    text-align: end;
+    margin-right: 30px;
+}
+
+.nav-right a{
+    background-color: black;
+    padding: 10px 25px;
+    color: white;
+    border-radius: 10px;
+}
