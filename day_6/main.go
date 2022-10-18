@@ -22,7 +22,7 @@ func main() {
 		w.Write([]byte("beta"))
 	})
 
-	fmt.Println("Server running on port 3000")
-	http.ListenAndServe("localhost:3000", route)
+	fmt.Println("Server running on port 5500")
+	http.ListenAndServe("localhost:5500", route)
 
 }
