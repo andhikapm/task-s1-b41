@@ -1,0 +1,65 @@
+*{
+    text-decoration: none;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+body{
+    padding: 0;
+    margin: 0;
+    background-color:#e9e9e9 ;
+}
+
+.card{
+    display: flex;
+    height: 70vh;
+    width: 80vw;
+}
+
+.index-card{
+    background-color: white;
+    display: flex;
+    width: 90vh;
+    height: auto;
+    padding: 50px 100px;
+    margin: 50px auto;
+    box-shadow: 0 0 10px gray;
+    border-radius: 10px;
+}
+.card-left{
+    flex: 60%;
+}
+
+.card-right{
+    padding-left: 50px ;
+    flex: 40%;
+}
+
+.list_sosmed{
+    width: auto;
+    height: auto;
+    margin-top: 25px;
+}
+
+.list_sosmed i{
+    font-size: 30px; 
+    text-align: center; 
+    height: 40px; 
+    width: 40px;
+    border: 5px solid black; 
+    background-color: black;
+    margin-right: 15px;
+}
+
+.card-right div{
+    width: 350px;
+    height: 550px;
+    box-shadow: 0 0 10px gray;
+    border-radius: 10px
+}
+
+.card-img-top{
+    object-fit: cover; 
+    width:inherit; 
+    height: 350px; 
+    border-radius: 50px 50px 0 0;
+}
