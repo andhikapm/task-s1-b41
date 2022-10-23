@@ -73,6 +73,8 @@ func home(w http.ResponseWriter, r *http.Request) {
 
 	rows, _ := connection.Conn.Query(context.Background(), "SELECT id, name, start_date, end_date, description, technologies, image FROM tb_projects")
 
+	dataBlogs = []Blog{}
+
 	for rows.Next() {
 		var each = Blog{} // manggil struct
 
@@ -124,6 +126,8 @@ func blog(w http.ResponseWriter, r *http.Request) {
 
 	rows, _ := connection.Conn.Query(context.Background(), "SELECT id, name, start_date, end_date, description, technologies, image"+" FROM tb_projects")
 
+	var result []Blog
+
 	for rows.Next() {
 		var each = Blog{} // manggil struct
 
@@ -137,15 +141,16 @@ func blog(w http.ResponseWriter, r *http.Request) {
 		each.Post_date = each.StartDate.Format("2006-01-02")
 
 		//fmt.Println(each.Technologies)
-		dataBlogs = append(dataBlogs, each)
+		result = append(result, each)
 	}
 
 	//dataBlogs[0].Technologies = []string{"fa-brands fa-google", "fa-brands fa-github", "fa-brands fa-windows", "fa-brands fa-android"}
 
 	//fmt.Println(dataBlogs[0].Technologies[0])
+	fmt.Println(result)
 
 	respData := map[string]interface{}{
-		"Blogs": dataBlogs,
+		"Blogs": result,
 	}
 
 	w.WriteHeader(http.StatusOK)
