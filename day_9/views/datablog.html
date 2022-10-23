@@ -35,12 +35,13 @@
                         {{range $index, $data := .Blogs}}
                         <div class="blog-list-item">
                             <div class="blog-image">
-                                <img src="../public/img/indprof.jpg">
+                                <!--<img src="../public/img/indprof.jpg">-->
+                                <img src= {{$data.Image}}>
                             </div>
                             <div class="blog-content">
                                 <h1 >
                                     <a href="/blog-detail/{{$index}}" target="_blank">
-                                        {{$data.Name}}
+                                        {{$data.Name}}{{$index}}
                                     </a>
                                 </h1>
                                 <div class="detail-blog-content">
@@ -52,10 +53,15 @@
                                     </p>
                                 </div>
                                 <div class="tech-list-group">
+                                    <!--
                                     <i class="fa-brands fa-google"></i>
                                     <i class="fa-brands fa-github"></i>
                                     <i class="fa-brands fa-windows"></i>
                                     <i class="fa-brands fa-android"></i>
+                                    -->
+                                    {{range $lenghtTech, $alpha := $data.Technologies}}
+                                    <i class={{$alpha}}></i>
+                                    {{end}}
                                 </div>
                                 <div class="btn-group">
                                     <a href="#" class="btn-edit">edit</a>

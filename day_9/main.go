@@ -25,8 +25,8 @@ type Blog struct {
 	Author       string
 }
 
-var Blogs = []Blog{
-	{
+var dataBlogs = []Blog{
+	/*{
 		Name:        "Alpha",
 		Post_date:   "20-06-1999",
 		Author:      "Beta",
@@ -37,7 +37,7 @@ var Blogs = []Blog{
 		Post_date:   "17-09-2000",
 		Author:      "beta",
 		Description: "Hellol",
-	},
+	},*/
 }
 
 func main() {
@@ -54,6 +54,8 @@ func main() {
 	route.HandleFunc("/add-blog", addBlog).Methods("POST")
 	route.HandleFunc("/delete-blog/{index}", deleteBlog).Methods("GET")
 
+	var giga = 100
+	fmt.Println(giga)
 	fmt.Println("Server running on port 5000")
 	http.ListenAndServe("localhost:5000", route)
 
@@ -69,8 +71,29 @@ func home(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	rows, _ := connection.Conn.Query(context.Background(), "SELECT id, name, start_date, end_date, description, technologies, image FROM tb_projects")
+
+	for rows.Next() {
+		var each = Blog{} // manggil struct
+
+		err := rows.Scan(&each.Id, &each.Name, &each.StartDate, &each.EndDate, &each.Description, &each.Technologies, &each.Image)
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
+
+		each.Author = "rudi"
+		each.Post_date = each.StartDate.Format("2006-01-02")
+
+		dataBlogs = append(dataBlogs, each)
+	}
+
+	respData := map[string]interface{}{
+		"Blogs": dataBlogs,
+	}
+
 	w.WriteHeader(http.StatusOK)
-	tmpl.Execute(w, nil)
+	tmpl.Execute(w, respData)
 }
 
 func contact(w http.ResponseWriter, r *http.Request) {
@@ -99,9 +122,7 @@ func blog(w http.ResponseWriter, r *http.Request) {
 
 	// var query = "SELECT id, title, content FROM tb_blog"
 
-	rows, _ := connection.Conn.Query(context.Background(), "SELECT id, name, start_date, end_date, description, technologies, image FROM tb_projects")
-
-	var result []Blog // array data
+	rows, _ := connection.Conn.Query(context.Background(), "SELECT id, name, start_date, end_date, description, technologies, image"+" FROM tb_projects")
 
 	for rows.Next() {
 		var each = Blog{} // manggil struct
@@ -115,13 +136,16 @@ func blog(w http.ResponseWriter, r *http.Request) {
 		each.Author = "rudi"
 		each.Post_date = each.StartDate.Format("2006-01-02")
 
-		result = append(result, each)
+		//fmt.Println(each.Technologies)
+		dataBlogs = append(dataBlogs, each)
 	}
 
-	fmt.Println(result)
+	//dataBlogs[0].Technologies = []string{"fa-brands fa-google", "fa-brands fa-github", "fa-brands fa-windows", "fa-brands fa-android"}
+
+	//fmt.Println(dataBlogs[0].Technologies[0])
 
 	respData := map[string]interface{}{
-		"Blogs": result,
+		"Blogs": dataBlogs,
 	}
 
 	w.WriteHeader(http.StatusOK)
@@ -142,7 +166,7 @@ func blogDetail(w http.ResponseWriter, r *http.Request) {
 
 	index, _ := strconv.Atoi(mux.Vars(r)["index"])
 
-	for i, data := range Blogs {
+	for i, data := range dataBlogs {
 		if index == i {
 			BlogDetail = Blog{
 				Name:        data.Name,
@@ -198,7 +222,7 @@ func addBlog(w http.ResponseWriter, r *http.Request) {
 		Post_date:   postDate,
 	}
 
-	Blogs = append(Blogs, newBlog)
+	dataBlogs = append(dataBlogs, newBlog)
 
 	http.Redirect(w, r, "/blog", http.StatusMovedPermanently)
 }
@@ -207,8 +231,8 @@ func deleteBlog(w http.ResponseWriter, r *http.Request) {
 	index, _ := strconv.Atoi(mux.Vars(r)["index"])
 	fmt.Println(index)
 
-	Blogs = append(Blogs[:index], Blogs[index+1:]...)
-	fmt.Println(Blogs)
+	dataBlogs = append(dataBlogs[:index], dataBlogs[index+1:]...)
+	fmt.Println(dataBlogs)
 
 	http.Redirect(w, r, "/blog", http.StatusFound)
 }

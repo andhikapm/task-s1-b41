@@ -63,6 +63,48 @@
                 </div>
             </div>
         </div>
+
+        <div class="blog">
+            <div style="display: flex; justify-content: center;"><h1 >My Project</h1></div>
+                <div id="contents" class="blog-list">
+
+                    {{range $index, $data := .Blogs}}
+                        <div class="blog-list-item">
+                            <div class="blog-image">
+                                <img src= {{$data.Image}}>
+                            </div>
+                            <div class="blog-content">
+                                <h1 >
+                                    <a href="/blog-detail/{{$index}}" target="_blank">
+                                        {{$data.Name}}
+                                    </a>
+                                </h1>
+                                <div class="detail-blog-content">
+                                    {{$data.Post_date}} | {{$data.Author}}
+                                </div>
+                                <div class="parg-content">
+                                    <p>
+                                        {{$data.Description}}
+                                    </p>
+                                </div>
+                                <div class="tech-list-group">
+                                    {{range $lenghtTech, $dataTech := $data.Technologies}}
+                                    <i class={{$dataTech}}></i>
+                                    {{end}}
+                                </div>
+                                <div class="btn-group">
+                                    <a href="#" class="btn-edit">edit</a>
+                                    <a href="/delete-blog/{{$index}}" class="btn-post">delete</a>
+                                </div>
+                            </div>
+                        </div>
+                        {{end}}
+                    
+
+                </div>
+            </div>
+        </div>
+
     </body>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </html>
