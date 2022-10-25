@@ -1,0 +1,131 @@
+*{
+    text-decoration: none;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+body{
+    padding: 0;
+    margin: 0;/*
+    background-color:#e9e9e9 ;*/
+}
+
+.card{
+    display: flex;
+}
+
+
+.list_sosmed{
+    width: auto;
+    height: auto;
+    margin-top: 25px;
+}
+
+.list_sosmed i{
+    font-size: 30px; 
+    text-align: center; 
+    height: 40px; 
+    width: 40px;
+    border: 5px solid black; 
+    background-color: black;
+    margin-right: 15px;
+}
+
+.cardImg{
+    object-fit: cover; 
+    width:inherit; 
+    height: 150px; 
+    border-radius: 10px 10px 0 0;
+}
+
+.card-right{
+    padding-left: 50px ;
+}
+
+.card-right .card{
+    box-shadow: 0 0 10px gray;
+    border: none;
+    border-radius: 10px
+}
+
+.card-right img{
+    object-fit: cover; 
+    width:inherit; 
+    height: 435px; 
+    border-radius: 10px 10px 0 0;
+}
+.blog-list {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    padding: 50px 100px 0px 250px;
+}
+
+.blog-list-item {
+    width: 350px;
+    height: 550px;
+    padding: 15px;
+    margin-bottom: 75px;
+    border: 2px solid #dbdbdb;
+    border-radius: 8px;
+    background-color: #ffffff;
+}
+
+.blog-image {
+    flex: 1;
+}
+
+.blog-image img {
+    width: 100%;
+    height: 250px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.blog-list-item .blog-content {
+    padding-left: 20px;
+    flex: 2;
+}
+
+.blog-content h1{
+    margin-bottom: 5px
+}
+
+.blog-content h1 a {
+    font-size: medium;
+    text-decoration: none;
+    color: #000000;
+}
+
+.detail-blog-content {
+    margin-top: 0;
+    color: #777777;
+    font-weight: 300;
+    font-size: 12px;
+}
+
+.parg-content{
+    overflow: hidden;
+    height: 70px;
+    margin-bottom: 20px;
+}
+
+.blog-list .blog-list-item p {
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 20px;
+    text-align: justify;
+}
+
+.tech-list-group{
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+.tech-list-group i{
+    margin-right: 15px;
+}
+ 
+.btn-group {
+    display: grid;
+    grid-template-columns: auto auto;
+    margin-bottom: 20px;
+}
