@@ -1,0 +1,64 @@
+*{
+    text-decoration: none;
+    font-family: Verdana, Geneva, Tahoma, sans-serif
+}
+
+body {
+    margin: 0;
+}
+
+.detail-blog {
+    padding: 50px;
+    display: flex;
+    justify-content: center;
+}
+
+.detail-blog .detail-blog-card .detail-blog-title {
+    font-size: 40px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.detail-blog-info{
+    display: grid;
+    grid-template-columns: auto 800px;
+    margin-top: 30px;
+    margin-bottom: 50px;
+}
+
+.detail-dur{
+    margin-bottom: 50px;
+}
+
+.detail-dur label{
+    font-size: 25px;
+}
+
+.detail-dur p{
+    color:#838282;
+    font-size: 20px;
+}
+
+.detail-dur p i{
+    color: black;
+    font-size: 30px;
+}
+
+.detail-tech label{
+    font-size: 25px;
+}
+
+.detail-tech p{
+    color:#838282;
+    font-size: 20px;
+}
+
+.detail-tech p i{
+    color: black;
+    font-size: 30px;
+}
+
+.detail-tech-list{
+    display: grid;
+    grid-template-columns: 250px auto;
+}
