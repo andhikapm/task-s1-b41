@@ -12,17 +12,19 @@ import (
 
 func UploadFile(next http.HandlerFunc) http.HandlerFunc {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+
 		file, handler, err := r.FormFile("dataImage")
+
 		if err != nil {
 			fmt.Println(err)
 			json.NewEncoder(w).Encode("Error Retrieving the File")
 			return
 		}
 		defer file.Close()
-		fmt.Printf("Uploaded File: %+v\n", handler.Filename)
+		//fmt.Printf("Uploaded File: %+v\n", handler.Filename)
 
 		// set destination to save file
-		tempFile, err := ioutil.TempFile("uploads", "image-*"+handler.Filename)
+		tempFile, err := ioutil.TempFile("uploads", "*"+handler.Filename)
 		if err != nil {
 			fmt.Println(err)
 			fmt.Println("path upload error")

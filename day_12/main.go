@@ -4,16 +4,20 @@ import (
 	"context"
 	"day_12/connection"
 	"day_12/middleware"
+	"encoding/json"
 	"fmt"
 	"html/template"
+	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 	"strconv"
 	"strings"
 	"time"
 
 	"github.com/gorilla/mux"
 	"github.com/gorilla/sessions"
+	"github.com/jackc/pgx/v5"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -56,7 +60,7 @@ type User struct {
 
 var dataBlogs = []Blog{}
 
-var sqlDec string
+var tempImg string
 
 func main() {
 	route := mux.NewRouter()
@@ -71,11 +75,10 @@ func main() {
 	route.HandleFunc("/blog-detail/{id}", blogDetail).Methods("GET")
 	route.HandleFunc("/form-blog", formAddBlog).Methods("GET")
 	route.HandleFunc("/add-blog", middleware.UploadFile(addBlog)).Methods("POST")
-	//route.HandleFunc("/add-blog", addBlog).Methods("POST")
 	route.HandleFunc("/delete-blog/{id}", deleteBlog).Methods("GET")
 
 	route.HandleFunc("/form-edit-blog/{id}", formEditBlog).Methods("GET")
-	route.HandleFunc("/edit-blog/{id}", middleware.UploadFile(editBlog)).Methods("POST")
+	route.HandleFunc("/edit-blog/{id}", editBlog).Methods("POST")
 
 	route.HandleFunc("/form-register", formRegister).Methods("GET")
 	route.HandleFunc("/register", register).Methods("POST")
@@ -103,16 +106,22 @@ func home(w http.ResponseWriter, r *http.Request) {
 	var store = sessions.NewCookieStore([]byte("SESSION_KEY"))
 	session, _ := store.Get(r, "SESSION_KEY")
 
-	sqlDec = "SELECT id, name, start_date, end_date, description, technologies, image FROM tb_projects ORDER BY id ASC"
+	var rows pgx.Rows
 
 	if session.Values["StatLogin"] != true {
+
 		DataAcc.StatLogin = false
+		rows, _ = connection.Conn.Query(context.Background(), "SELECT tb_projects.*, tb_user.name FROM tb_projects LEFT JOIN tb_user ON tb_projects.user_id = tb_user.id ORDER BY id ASC")
+
 	} else {
+
 		DataAcc.StatLogin = session.Values["StatLogin"].(bool)
 		DataAcc.UserName = session.Values["Name"].(string)
+		rows, _ = connection.Conn.Query(context.Background(), "SELECT tb_projects.*, tb_user.name FROM tb_projects LEFT JOIN tb_user ON tb_projects.user_id = tb_user.id WHERE tb_user.name=$1 ORDER BY id ASC", DataAcc.UserName)
+
 	}
 
-	rows, _ := connection.Conn.Query(context.Background(), "SELECT tb_projects.*, tb_user.name FROM tb_projects LEFT JOIN tb_user ON tb_projects.user_id = tb_user.id ORDER BY id ASC")
+	//rows, _ = connection.Conn.Query(context.Background(), "SELECT tb_projects.*, tb_user.name FROM tb_projects LEFT JOIN tb_user ON tb_projects.user_id = tb_user.id ORDER BY id ASC")
 
 	dataBlogs = []Blog{}
 
@@ -203,6 +212,18 @@ func home(w http.ResponseWriter, r *http.Request) {
 
 		dataBlogs = append(dataBlogs, each)
 	}
+
+	fm := session.Flashes("message")
+
+	var flashes []string
+	if len(fm) > 0 {
+		session.Save(r, w)
+		for _, fl := range fm {
+			flashes = append(flashes, fl.(string))
+		}
+	}
+
+	DataAcc.FlashData = strings.Join(flashes, "")
 
 	//fmt.Println(dataBlogs)
 	respData := map[string]interface{}{
@@ -367,6 +388,7 @@ func formAddBlog(w http.ResponseWriter, r *http.Request) {
 
 	if session.Values["StatLogin"] != true {
 		DataAcc.StatLogin = false
+		DataAcc.FlashData = "Need Login!!"
 	} else {
 		DataAcc.StatLogin = session.Values["StatLogin"].(bool)
 		DataAcc.UserName = session.Values["Name"].(string)
@@ -402,7 +424,6 @@ func addBlog(w http.ResponseWriter, r *http.Request) {
 	description := r.PostForm.Get("dataDescription")
 	technologies := r.Form["dataTechnologies"]
 	image := dataContex.(string)
-	//image := "../public/img/indprof.jpg"
 
 	userId := session.Values["Id"].(int)
 
@@ -426,7 +447,25 @@ func addBlog(w http.ResponseWriter, r *http.Request) {
 func deleteBlog(w http.ResponseWriter, r *http.Request) {
 	id, _ := strconv.Atoi(mux.Vars(r)["id"])
 
-	_, err := connection.Conn.Exec(context.Background(), "DELETE FROM tb_projects WHERE id=$1", id)
+	var deletoImg = Blog{}
+	err := connection.Conn.QueryRow(context.Background(), "SELECT image FROM tb_projects WHERE id=$1", id).Scan(
+		&deletoImg.Image,
+	)
+
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte("message : " + err.Error()))
+		return
+	}
+
+	e := os.Remove("uploads/" + deletoImg.Image)
+	if e != nil {
+		log.Fatal(e)
+
+	}
+
+	_, err = connection.Conn.Exec(context.Background(), "DELETE FROM tb_projects WHERE id=$1", id)
+
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte("message : " + err.Error()))
@@ -469,6 +508,8 @@ func formEditBlog(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("message : " + err.Error()))
 		return
 	}
+
+	tempImg = EditProject.Image
 
 	EditProject.NodeJS = false
 	EditProject.NextJS = false
@@ -522,29 +563,80 @@ func editBlog(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err)
 	}
 
-	dataContex := r.Context().Value("dataFile")
-
+	file, handler, err := r.FormFile("dataImage")
 	name := r.PostForm.Get("dataName")
 	start_date := r.PostForm.Get("dataStartDate")
 	end_date := r.PostForm.Get("dataEndDate")
 	description := r.PostForm.Get("dataDescription")
-	image := dataContex.(string)
 	technologies := r.Form["dataTechnologies"]
+
+	if file != nil {
+
+		if err != nil {
+			fmt.Println(err)
+			json.NewEncoder(w).Encode("Error Retrieving the File")
+			return
+		}
+		defer file.Close()
+
+		tempFile, err := ioutil.TempFile("uploads", "*"+handler.Filename)
+		if err != nil {
+			fmt.Println(err)
+			fmt.Println("path upload error")
+			json.NewEncoder(w).Encode(err)
+			return
+		}
+		defer tempFile.Close()
+
+		fileBytes, err := ioutil.ReadAll(file)
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		tempFile.Write(fileBytes)
+
+		dataE := tempFile.Name()
+		filename := dataE[8:]
+
+		ctx := context.WithValue(r.Context(), "dataFile", filename)
+
+		dataContex := ctx.Value("dataFile")
+		image := dataContex.(string)
+
+		e := os.Remove("uploads/" + tempImg)
+		if e != nil {
+			log.Fatal(e)
+
+		}
+
+		fmt.Println("Image : " + image)
+
+		_, err = connection.Conn.Exec(context.Background(), "UPDATE tb_projects SET name=$2, start_date=$3, end_date=$4, description=$5, technologies=$6, image=$7 WHERE id=$1", id, name, start_date, end_date, description, technologies, image)
+
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			w.Write([]byte("message : " + err.Error()))
+			return
+		}
+
+	} else {
+
+		_, err = connection.Conn.Exec(context.Background(), "UPDATE tb_projects SET name=$2, start_date=$3, end_date=$4, description=$5, technologies=$6 WHERE id=$1", id, name, start_date, end_date, description, technologies)
+
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			w.Write([]byte("message : " + err.Error()))
+			return
+		}
+
+	}
 
 	fmt.Println(id)
 	fmt.Println("Name : " + name)
 	fmt.Println("Start Date : " + start_date)
 	fmt.Println("End Date : " + end_date)
 	fmt.Println("Description : " + description)
-	fmt.Println("Image : " + image)
 	fmt.Println(technologies)
-
-	_, err = connection.Conn.Exec(context.Background(), "UPDATE tb_projects SET name=$2, start_date=$3, end_date=$4, description=$5, technologies=$6, image=$7 WHERE id=$1", id, name, start_date, end_date, description, technologies, image)
-	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		w.Write([]byte("message : " + err.Error()))
-		return
-	}
 
 	http.Redirect(w, r, "/", http.StatusMovedPermanently)
 }
@@ -606,7 +698,9 @@ func formLogin(w http.ResponseWriter, r *http.Request) {
 			flashes = append(flashes, fl.(string))
 		}
 	}
-
+	DataAcc.FlashData = strings.Join(flashes, "")
+	session.Options.MaxAge = -1
+	session.Save(r, w)
 	w.WriteHeader(http.StatusOK)
 	tmpl.Execute(w, DataAcc)
 }
@@ -629,16 +723,26 @@ func login(w http.ResponseWriter, r *http.Request) {
 		&user.Id, &user.Name, &user.Email, &user.Password,
 	)
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		w.Write([]byte("message : " + err.Error()))
-		return
+		session.AddFlash("Wrong Email!!", "message")
+		session.Save(r, w)
+
+		http.Redirect(w, r, "/form-login", http.StatusMovedPermanently)
+		/*
+			w.WriteHeader(http.StatusBadRequest)
+			w.Write([]byte("message : " + err.Error()))
+			return*/
 	}
 
 	err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(pass))
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		w.Write([]byte("message : " + err.Error()))
-		return
+		session.AddFlash("Wrong Password!!", "message")
+		session.Save(r, w)
+
+		http.Redirect(w, r, "/form-login", http.StatusMovedPermanently)
+		/*
+			w.WriteHeader(http.StatusBadRequest)
+			w.Write([]byte("message : " + err.Error()))
+			return*/
 	}
 
 	session.Values["StatLogin"] = true
